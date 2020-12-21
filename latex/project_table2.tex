@@ -1,0 +1,123 @@
+\documentclass{article}
+
+\usepackage{algorithm}
+
+\usepackage{algpseudocode}
+
+\newcommand\Algphase[1]{%
+
+\vspace*{-.7\baselineskip}\Statex\hspace*{\dimexpr-\algorithmicindent-2pt\relax}\rule{\textwidth}{0.4pt}%
+
+\Statex\hspace*{-\algorithmicindent}\textbf{#1}%
+
+\vspace*{-.7\baselineskip}\Statex\hspace*{\dimexpr-\algorithmicindent-2pt\relax}\rule{\textwidth}{0.4pt}%
+
+}
+
+\begin{document}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\renewcommand{\algorithmicprocedure}{ \textbf{Processing:}}
+
+\floatname{algorithm}{Network} %将 algorithm 替换为 network
+
+\begin{algorithm}
+
+\caption{Residual Attention Network(Attention 56)}\label{euclid}
+
+\begin{algorithmic}
+
+\Require Image
+
+\Ensure Labels
+
+\Procedure{}{}
+
+\State 1.ImageDataGenerator
+
+\State \quad 1.1 Rotate
+
+\State \quad 1.2 Shift
+
+\State \quad 1.3 Flip
+
+\State 2.Normalize
+
+\EndProcedure%
+
+\Algphase{Preparation Phase}
+
+\Require Image Tensor    \Comment{Shape: $32 \times 32 $}
+
+\Procedure{}{} \Comment{Output Size}
+
+\State  1. Padding  \Comment{$40 \times 40 $}
+
+\State  2. Cropping  \Comment{$32 \times 32 $}
+
+\State  3. Convolution  \Comment{$16 \times 16$}
+
+\State  4. MaxPooling  \Comment{optional}
+
+\EndProcedure\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+
+\Algphase{Stage 1}
+
+\Require Image Tensor, Filter, residual unit type 
+
+\Procedure{}{} \Comment{Output Size}
+
+\State  1. Residual Unit \Comment{$16 \times 16$}
+
+\State  2. Attention Module A * 1  \Comment{$16 \times 16$}
+
+\EndProcedure\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad{}
+
+\Algphase{Stage 2}
+
+\Require Image Tensor, Filter, residual unit type  
+
+\Procedure{}{} \Comment{Output Size}
+
+\State  1. Residual Unit-Downsampling  \Comment{$8 \times 8$}
+
+\State  2. Attention Module B * 1  \Comment{$8 \times 8 $}
+
+\EndProcedure\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad{ }
+
+\Algphase{Stage 3}
+
+\Require Image Tensor, Filter, residual unit type 
+
+\Procedure{}{} \Comment{Output Size}
+
+\State  1. Residual Unit-Downsampling  \Comment{$4 \times 4 $}
+
+\State  2. Attention Module C * 1  \Comment{$4 \times 4 $}
+
+\EndProcedure\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad{}
+
+\Algphase{Ending Phase}
+
+\Require Image Tensor, Filter, residual unit type 
+\Procedure{}{} \Comment{Output Size}
+
+\State  1. Residual Unit-Downsampling  \Comment{$2 \times 2$}
+
+\State  2. Residual Unit * 2 \Comment{$2 \times 2$}
+
+\State  2. Average Pooling  \Comment{$1 \times 1 $}
+
+\State 3. Fully Connected 
+
+
+\EndProcedure\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad{Output Size}
+
+
+\end{algorithmic}
+
+\end{algorithm}
+
+\end{document}
