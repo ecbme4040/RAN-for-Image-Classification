@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\newcommand{\tabincell}[2]{
+    \begin{tabular}{@{}#1@{}}
+        #2
+    \end{tabular}
+}
+
+\title{20201220}
+\author{707209186 }
+\date{December 2020}
+
+\begin{document}
+
+\begin{table}
+\begin{tabular}{c|c|c|c}
+\hline
+     Layer & Output Size & Attention-56 & Attention-92  \\ \hline
+      Conv1 & 16 $\times$ 16 &  \multicolumn{2}{|c}{3 $\times$ 3, 64, stride 2} \\ \hline
+      Residual Unit & 16 $\times$ 16 &  \multicolumn{2}{|c}{$\left(\begin{array}{l}
+1 \times 1,16 \\
+3 \times 3,16 \\
+1 \times 1,64
+\end{array}\right) \times 1$} \\ \hline
+      Attention Module - A & 16 $\times$ 16 & Attention $\times$ 1 & Attention $\times$ 2 \\ 
+      \hline
+     \tabincell{l}{Residual Unit\\ Down Sampling} & 8 $\times$ 8 & \multicolumn{2}{|c}{$\left(\begin{array}{l}
+1 \times 1, 32 \\
+3 \times 3, 32 \\
+1 \times 1,128
+\end{array}\right) \times 1$} \\
+ \hline
+ Attention Module - B & 8 $\times$ 8 & Attention $\times$ 1 & Attention $\times$ 2 \\ 
+      \hline
+            \tabincell{l}{Residual Unit\\ Down Sampling} & 4 $\times$ 4 & \multicolumn{2}{|c}{$\left(\begin{array}{l}
+1 \times 1,64 \\
+3 \times 3,64 \\
+1 \times 1,256
+\end{array}\right) \times 1$} \\
+\hline
+ Attention Module - C & 4 $\times$ 4 & Attention $\times$ 1 & Attention $\times$ 2 \\ 
+     
+ \hline
+             \tabincell{l}{Residual Unit\\ Down Sampling} & 2 $\times$ 2 & \multicolumn{2}{|c}{$\left(\begin{array}{l}
+1 \times 1,128 \\
+3 \times 3,128 \\
+1 \times 1,512
+\end{array}\right) \times 1$} \\
+ \hline
+              Residual Unit  & 2 $\times$ 2 & \multicolumn{2}{|c}{$\left(\begin{array}{l}
+1 \times 1,128 \\
+3 \times 3,128 \\
+1 \times 1,512
+\end{array}\right) \times 2$} \\
+ \hline
+       Average Pooling & 1 $\times$ 1 &  \multicolumn{2}{|c}{2 $\times$ 2 stride 1} \\ \hline
+       FC，Softmax & \multicolumn{3}{|c}{10} \\ \hline
+       \multicolumn{2}{c|}{params $\times 10^6$} & 4.08 & 5.76 \\ \hline 
+       \multicolumn{2}{c|}{Trunk depth } & 56 & 92 \\ \hline 
+\end{tabular}
+\end{table}
+
+\end{document}
